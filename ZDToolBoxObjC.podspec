@@ -1,0 +1,82 @@
+#
+# Be sure to run `pod lib lint ZDToolBoxObjC.podspec' to ensure this is a
+# valid spec before submitting.
+#
+# Any lines starting with a # are optional, but their use is encouraged
+# To learn more about a Podspec see https://guides.cocoapods.org/syntax/podspec.html
+#
+
+Pod::Spec.new do |s|
+  s.name             = 'ZDToolBoxObjC'
+  s.version          = '0.0.1'
+  s.summary          = 'iOS开发工具箱'
+  s.description      = <<-DESC
+    iOS开发工具箱，包含子类、分类、工具类
+                       DESC
+  s.homepage         = 'https://github.com/faimin/ZDToolBoxObjC'
+  s.license          = { 
+    :type => 'MIT', 
+    :file => 'LICENSE' 
+}
+  s.author           = { 'Zero.D.Saber' => 'fuxianchao@gmail.com' }
+  s.source           = { 
+    :git => 'https://github.com/faimin/ZDToolBoxObjC.git', 
+    :tag => s.version.to_s 
+  }
+  # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  
+  s.module_name  = 'ZDToolBoxObjC'
+  s.pod_target_xcconfig = {
+     'DEFINES_MODULE' => 'YES'
+  }
+
+  s.ios.deployment_target = '10.0'
+
+#   s.source_files = 'ZDToolBoxObjC/Classes/**/*'
+
+  s.subspec 'ZDCommonTool' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDCommonTool/*.{h,m}'
+  end
+
+  s.subspec 'ZDMacros' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDMacros/*.{h,m}'
+    ss.dependency 'ZDToolBoxObjC/ZDCommonTool'
+  end
+
+  s.subspec 'ZDProxy' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDProxy/*.{h,m}'
+  end
+
+  s.subspec 'ZDCategory' do |ss|
+    ss.subspec 'Foundation' do |sss|
+      sss.source_files = 'ZDToolBoxObjC/Classes/ZDCategory/Foundation/*.{h,m}'
+      #sss.private_header_files = 'ZDToolBoxObjC/Classes/ZDCategory/Foundation/ZDDictionaryProtocol.h'
+      sss.frameworks = 'UIKit', 'Foundation', 'CoreText'
+    end
+
+    ss.subspec 'UIKit' do |sss|
+      sss.source_files = 'ZDToolBoxObjC/Classes/ZDCategory/UIKit/*.{h,m}'
+      sss.frameworks = 'UIKit', 'QuartzCore', 'CoreImage', 'CoreGraphics', 'ImageIO', 'CoreText', 'WebKit'
+      sss.dependency 'ZDToolBoxObjC/ZDProxy'
+    end
+
+    ss.dependency 'ZDToolBoxObjC/ZDMacros'
+  end
+
+  s.subspec 'ZDSubclass' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDSubclass/*.{h,m}'
+    ss.dependency 'ZDToolBoxObjC/ZDProxy'
+  end
+
+  s.subspec 'ZDTools' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDTools/*.{h,m}'
+  end
+  
+  # s.resource_bundles = {
+  #   'ZDToolBoxObjC' => ['ZDToolBoxObjC/Assets/*.png']
+  # }
+
+  # s.public_header_files = 'Pod/Classes/**/*.h'
+  # s.frameworks = 'UIKit', 'MapKit'
+  # s.dependency 'AFNetworking', '~> 2.3'
+end
