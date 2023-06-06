@@ -6,7 +6,7 @@
 //
 
 #import "NSNotificationCenter+ZDUtility.h"
-@import ObjectiveC;
+#import <objc/runtime.h>
 
 @interface ZDNotificationToken : NSObject
 @property (nonatomic, unsafe_unretained) NSNotificationCenter *notificationCenter;
