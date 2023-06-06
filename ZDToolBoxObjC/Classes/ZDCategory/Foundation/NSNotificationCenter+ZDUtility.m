@@ -9,7 +9,7 @@
 @import ObjectiveC;
 
 @interface ZDNotificationToken : NSObject
-@property (nonatomic, weak) NSNotificationCenter *notificationCenter;
+@property (nonatomic, unsafe_unretained) NSNotificationCenter *notificationCenter;
 @property (nonatomic, strong) id<NSObject> observer;
 @end
 
