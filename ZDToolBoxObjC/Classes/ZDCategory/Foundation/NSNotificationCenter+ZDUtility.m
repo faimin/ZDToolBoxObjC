@@ -37,8 +37,8 @@
 @implementation NSNotificationCenter (ZDUtility)
 
 - (void)zd_addObserverForName:(NSNotificationName)name object:(id)obj queue:(NSOperationQueue *)queue receiver:(id)virtualObserver usingBlock:(void (^)(NSNotification * _Nonnull))block {
-    id<NSObject> revealObserver = [self addObserverForName:name object:obj queue:queue usingBlock:block];
-    ZDNotificationToken *token = [[ZDNotificationToken alloc] initWithNotificationCenter:self observer:revealObserver];
+    id<NSObject> realObserver = [self addObserverForName:name object:obj queue:queue usingBlock:block];
+    ZDNotificationToken *token = [[ZDNotificationToken alloc] initWithNotificationCenter:self observer:realObserver];
     objc_setAssociatedObject(virtualObserver, (__bridge const void * _Nonnull)(name), token, OBJC_ASSOCIATION_RETAIN);
 }
 
