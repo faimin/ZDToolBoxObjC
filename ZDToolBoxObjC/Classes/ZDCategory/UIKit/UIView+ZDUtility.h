@@ -83,9 +83,6 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic) CGFloat right;
 
 // Center Point
-#if !IS_IOS_DEVICE
-@property (nonatomic) CGPoint center;
-#endif
 @property (nonatomic) CGFloat centerX;
 @property (nonatomic) CGFloat centerY;
 
@@ -96,9 +93,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 // Layer
 @property (nonatomic, assign) CGFloat zd_cornerRadius;
-
-/// Extend clickable area, e.g: self.zd_touchExtendInsets = UIEdgeInsetsMake(-10, -20, -40, -10);
-@property (nonatomic, assign) UIEdgeInsets zd_touchExtendInsets;
 
 /// Chain Caller
 - (UIView *(^)(CGFloat))zd_left;

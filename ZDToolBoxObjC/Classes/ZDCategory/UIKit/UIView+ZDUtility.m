@@ -16,23 +16,11 @@
 
 ZD_AVOID_ALL_LOAD_FLAG_FOR_CATEGORY(UIView_ZDUtility)
 
-static const void *TouchExtendInsetKey = &TouchExtendInsetKey;
 static const void *CornerRadiusKey = &CornerRadiusKey;
 static const void *TapGestureKey = &TapGestureKey;
 static const void *TapGestureBlockKey = &TapGestureBlockKey;
 static const void *LongPressGestureKey = &LongPressGestureKey;
 static const void *LongPressGestureBlockKey = &LongPressGestureBlockKey;
-
-static void __Swizzle__(Class c, SEL orig, SEL new) {
-    Method origMethod = class_getInstanceMethod(c, orig);
-    Method newMethod = class_getInstanceMethod(c, new);
-    if (class_addMethod(c, orig, method_getImplementation(newMethod), method_getTypeEncoding(newMethod))){
-        class_replaceMethod(c, new, method_getImplementation(origMethod), method_getTypeEncoding(origMethod));
-    }
-    else {
-        method_exchangeImplementations(origMethod, newMethod);
-    }
-}
 
 @implementation UIView (ZDUtility)
 
@@ -262,13 +250,6 @@ static void __Swizzle__(Class c, SEL orig, SEL new) {
 
 @implementation UIView (Frame)
 
-+ (void)load {
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        __Swizzle__(self, @selector(pointInside:withEvent:), @selector(zdPointInside:withEvent:));
-    });
-}
-
 #pragma mark Frame
 
 - (CGPoint)origin {
@@ -376,17 +357,6 @@ static void __Swizzle__(Class c, SEL orig, SEL new) {
 }
 
 #pragma mark Center Point
-
-#if !IS_IOS_DEVICE
-- (CGPoint)center {
-	return CGPointMake(self.left + self.middleX, self.top + self.middleY);
-}
-
-- (void)setCenter:(CGPoint)newCenter {
-	self.left = newCenter.x - self.middleX;
-	self.top = newCenter.y - self.middleY;
-}
-#endif
 
 - (CGFloat)centerX {
 	return self.center.x;
@@ -536,92 +506,4 @@ static void __Swizzle__(Class c, SEL orig, SEL new) {
     return [objc_getAssociatedObject(self, CornerRadiusKey) floatValue];
 }
 
-#pragma mark - TouchExtendInset
-
-- (BOOL)zdPointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if (UIEdgeInsetsEqualToEdgeInsets(self.zd_touchExtendInsets, UIEdgeInsetsZero) || self.hidden) {
-        return [self zdPointInside:point withEvent:event];
-    }
-    
-    CGRect hitFrame = UIEdgeInsetsInsetRect(self.bounds, self.zd_touchExtendInsets);
-    hitFrame.size.width = MAX(hitFrame.size.width, 0);
-    hitFrame.size.height = MAX(hitFrame.size.height, 0);
-    BOOL result = CGRectContainsPoint(hitFrame, point);
-    return result;
-}
-
-- (void)setZd_touchExtendInsets:(UIEdgeInsets)touchExtendInsets {
-    objc_setAssociatedObject(self, TouchExtendInsetKey, [NSValue valueWithUIEdgeInsets:touchExtendInsets], OBJC_ASSOCIATION_RETAIN);
-}
-
-- (UIEdgeInsets)zd_touchExtendInsets {
-    return [objc_getAssociatedObject(self, TouchExtendInsetKey) UIEdgeInsetsValue];
-}
-
 @end
-
-
-@implementation UIImage (CornerRadius)
-
-- (UIImage *)imageWithCornerRadius:(CGFloat)radius {
-    //create drawing context
-    UIGraphicsBeginImageContextWithOptions(self.size, NO, 0.0f);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    if (context) {
-        //clip image
-        CGContextBeginPath(context);
-        CGContextMoveToPoint(context, 0.0f, radius);
-        CGContextAddLineToPoint(context, 0.0f, self.size.height - radius);
-        CGContextAddArc(context, radius, self.size.height - radius, radius, M_PI, M_PI / 2.0f, 1);
-        CGContextAddLineToPoint(context, self.size.width - radius, self.size.height);
-        CGContextAddArc(context, self.size.width - radius, self.size.height - radius, radius, M_PI / 2.0f, 0.0f, 1);
-        CGContextAddLineToPoint(context, self.size.width, radius);
-        CGContextAddArc(context, self.size.width - radius, radius, radius, 0.0f, -M_PI / 2.0f, 1);
-        CGContextAddLineToPoint(context, radius, 0.0f);
-        CGContextAddArc(context, radius, radius, radius, -M_PI / 2.0f, M_PI, 1);
-        CGContextClip(context);
-    }
-    
-    //draw image
-    [self drawAtPoint:CGPointZero];
-    
-    //capture resultant image
-    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    //return image
-    return image;
-}
-
-@end
-
-/**
- 
- - (UIImage *)drawImageWithBorderWidth:(CGFloat)borderWidth
- radius:(CGFloat)radius
- borderColor:(UIColor *)borderColor
- backgroundColor:(UIColor *)backgroundColor
- {
- CGFloat halfBorderWidth = borderWidth / 2.0;
- 
- UIGraphicsBeginImageContextWithOptions(self.bounds.size, NO, [UIScreen mainScreen].scale);
- CGContextRef context = UIGraphicsGetCurrentContext();
- 
- CGContextSetLineWidth(context, borderWidth);
- CGContextSetStrokeColorWithColor(context, borderColor.CGColor);
- CGContextSetFillColorWithColor(context, backgroundColor.CGColor);
- 
- CGFloat width = self.bounds.size.width, height = self.bounds.size.height;
- CGContextMoveToPoint(context, width - halfBorderWidth, radius + halfBorderWidth);  // 开始坐标右边开始
- CGContextAddArcToPoint(context, width - halfBorderWidth, height - halfBorderWidth, width - radius - halfBorderWidth, height - halfBorderWidth, radius);  // 右下角角度
- CGContextAddArcToPoint(context, halfBorderWidth, height - halfBorderWidth, halfBorderWidth, height - radius - halfBorderWidth, radius); // 左下角角度
- CGContextAddArcToPoint(context, halfBorderWidth, halfBorderWidth, width - halfBorderWidth, halfBorderWidth, radius); // 左上角
- CGContextAddArcToPoint(context, width - halfBorderWidth, halfBorderWidth, width - halfBorderWidth, radius + halfBorderWidth, radius); // 右上角
- 
- CGContextDrawPath(UIGraphicsGetCurrentContext(), kCGPathFillStroke);
- UIImage *output = UIGraphicsGetImageFromCurrentImageContext();
- UIGraphicsEndImageContext();
- return output;
- }
-
- */
