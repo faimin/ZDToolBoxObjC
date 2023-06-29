@@ -32,8 +32,6 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '10.0'
 
-#   s.source_files = 'ZDToolBoxObjC/Classes/**/*'
-
   s.subspec 'ZDCommonTool' do |ss|
     ss.source_files = 'ZDToolBoxObjC/Classes/ZDCommonTool/*.{h,m}'
   end
@@ -71,6 +69,12 @@ Pod::Spec.new do |s|
   s.subspec 'ZDTools' do |ss|
     ss.source_files = 'ZDToolBoxObjC/Classes/ZDTools/*.{h,m}'
   end
+  
+  s.subspec 'ZDHook' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDHook/*.{h,m}'
+  end
+  
+  s.default_subspecs = 'ZDCommonTool', 'ZDMacros', 'ZDProxy', 'ZDCategory', 'ZDSubclass', 'ZDTools'
   
   # s.resource_bundles = {
   #   'ZDToolBoxObjC' => ['ZDToolBoxObjC/Assets/*.png']
