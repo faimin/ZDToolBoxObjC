@@ -74,6 +74,18 @@ Pod::Spec.new do |s|
     ss.source_files = 'ZDToolBoxObjC/Classes/ZDHook/*.{h,m}'
   end
   
+  s.subspec 'All' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDAll/*'
+    
+    ss.dependency 'ZDToolBoxObjC/ZDCommonTool'
+    ss.dependency 'ZDToolBoxObjC/ZDMacros'
+    ss.dependency 'ZDToolBoxObjC/ZDProxy'
+    ss.dependency 'ZDToolBoxObjC/ZDCategory'
+    ss.dependency 'ZDToolBoxObjC/ZDSubclass'
+    ss.dependency 'ZDToolBoxObjC/ZDTools'
+    ss.dependency 'ZDToolBoxObjC/ZDHook'
+  end
+  
   s.default_subspecs = 'ZDCommonTool', 'ZDMacros', 'ZDProxy', 'ZDCategory', 'ZDSubclass', 'ZDTools'
   
   # s.resource_bundles = {

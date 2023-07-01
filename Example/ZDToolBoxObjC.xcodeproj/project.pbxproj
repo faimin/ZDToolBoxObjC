@@ -65,7 +65,7 @@
 		A522441AF76053AE0837C8FF /* Pods_ZDToolBoxObjC_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZDToolBoxObjC_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2AFA1A36B18D50C3D262FC6 /* Pods-ZDToolBoxObjC_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZDToolBoxObjC_Tests.release.xcconfig"; path = "Target Support Files/Pods-ZDToolBoxObjC_Tests/Pods-ZDToolBoxObjC_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D7BEBF90D5BEE67CE88C4304 /* Pods-ZDToolBoxObjC_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ZDToolBoxObjC_Example.release.xcconfig"; path = "Target Support Files/Pods-ZDToolBoxObjC_Example/Pods-ZDToolBoxObjC_Example.release.xcconfig"; sourceTree = "<group>"; };
-		EAF3E7F0BE9BCEA5DC861AA3 /* ZDToolBoxObjC.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZDToolBoxObjC.podspec; path = ../ZDToolBoxObjC.podspec; sourceTree = "<group>"; };
+		EAF3E7F0BE9BCEA5DC861AA3 /* ZDToolBoxObjC.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = ZDToolBoxObjC.podspec; path = ../ZDToolBoxObjC.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		F5E3491848A1071A455FD6DC /* Pods_ZDToolBoxObjC_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ZDToolBoxObjC_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
