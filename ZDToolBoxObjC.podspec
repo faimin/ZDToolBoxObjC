@@ -24,6 +24,7 @@ Pod::Spec.new do |s|
     :tag => s.version.to_s 
   }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
+  s.prefix_header_file = false
   
   s.module_name  = 'ZDToolBoxObjC'
   s.pod_target_xcconfig = {
