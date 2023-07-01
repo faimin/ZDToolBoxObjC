@@ -33,7 +33,7 @@ static void __Swizzle__(Class c, SEL orig, SEL new) {
 #pragma mark - TouchExtendInset
 
 - (BOOL)_zd_pointInside:(CGPoint)point withEvent:(UIEvent *)event {
-    if (UIEdgeInsetsEqualToEdgeInsets(self.zd_touchExtendInsets, UIEdgeInsetsZero) || self.hidden || self.alpha < 0.01 || !self.userInteractionEnabled) {
+    if (UIEdgeInsetsEqualToEdgeInsets(self.zd_touchExtendInsets, UIEdgeInsetsZero) || self.hidden || self.alpha <= 0.01 || !self.userInteractionEnabled) {
         return [self _zd_pointInside:point withEvent:event];
     }
     
