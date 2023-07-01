@@ -6,6 +6,7 @@
 //
 
 #import "ZDLinkedMap.h"
+#import <UIKit/UIKit.h>
 #import <pthread/pthread.h>
 
 @interface ZDLinkedMapNode<__covariant KeyType, __covariant ObjectType> : NSObject {

@@ -69,6 +69,7 @@ Pod::Spec.new do |s|
 
   s.subspec 'ZDTools' do |ss|
     ss.source_files = 'ZDToolBoxObjC/Classes/ZDTools/*.{h,m}'
+    ss.frameworks = 'UIKit'
   end
   
   s.subspec 'ZDHook' do |ss|
