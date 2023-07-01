@@ -34,7 +34,7 @@ static void __Swizzle__(Class c, SEL orig, SEL new) {
 
 - (BOOL)_zd_pointInside:(CGPoint)point withEvent:(UIEvent *)event {
     if (UIEdgeInsetsEqualToEdgeInsets(self.zd_touchExtendInsets, UIEdgeInsetsZero) || self.hidden) {
-        return [self zdPointInside:point withEvent:event];
+        return [self _zd_pointInside:point withEvent:event];
     }
     
     CGRect hitFrame = UIEdgeInsetsInsetRect(self.bounds, self.zd_touchExtendInsets);
