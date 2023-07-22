@@ -16,7 +16,7 @@
 
 @end
 
-BOOL ZD_IsBeingDebugged(void) {
+BOOL ZD_IsDebugging(void) {
     int                 junk;
     int                 mib[4];
     struct kinfo_proc   info;
