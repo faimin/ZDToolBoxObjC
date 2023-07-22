@@ -95,7 +95,7 @@ do {                                                 							\
 do { \
     if (!(expression)) { \
         NSLog(@"%@", [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __PRETTY_FUNCTION__, __FILE__, __LINE__, [NSString stringWithFormat:@"" __VA_ARGS__]]); \
-        if (ZD_IsBeingDebugged()) { \
+        if (ZD_IsDebugging()) { \
             printf("这是断点断言，直接跳过即可\n"); \
             __builtin_debugtrap(); \
         } \
