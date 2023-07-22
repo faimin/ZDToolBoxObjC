@@ -58,8 +58,6 @@ Pod::Spec.new do |s|
       sss.frameworks = 'UIKit', 'QuartzCore', 'CoreImage', 'CoreGraphics', 'ImageIO', 'CoreText', 'WebKit'
       sss.dependency 'ZDToolBoxObjC/ZDProxy'
     end
-
-    ss.dependency 'ZDToolBoxObjC/ZDMacros'
   end
 
   s.subspec 'ZDSubclass' do |ss|

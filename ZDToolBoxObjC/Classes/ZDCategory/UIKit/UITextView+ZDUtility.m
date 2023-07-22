@@ -8,13 +8,6 @@
 
 #import "UITextView+ZDUtility.h"
 #import <objc/runtime.h>
-#if __has_include(<ZDToolBoxObjC/ZDMacro.h>)
-#import <ZDToolBoxObjC/ZDMacro.h>
-#else
-#import "ZDMacro.h"
-#endif
-
-ZD_AVOID_ALL_LOAD_FLAG_FOR_CATEGORY(UITextView_ZDUtility)
 
 static const void *PlaceHolderLabelKey = &PlaceHolderLabelKey;
 
