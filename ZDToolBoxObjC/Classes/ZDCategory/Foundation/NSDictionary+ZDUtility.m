@@ -8,13 +8,6 @@
 
 #import "NSDictionary+ZDUtility.h"
 #import <Security/Security.h>
-#if __has_include(<ZDToolBoxObjC/ZDMacro.h>)
-#import <ZDToolBoxObjC/ZDMacro.h>
-#else
-#import "ZDMacro.h"
-#endif
-
-ZD_AVOID_ALL_LOAD_FLAG_FOR_CATEGORY(NSDictionary_ZDUtility)
 
 @implementation NSDictionary (ZDUtility)
 
