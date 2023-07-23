@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'ZDToolBoxObjC'
-  s.version          = '0.0.4'
+  s.version          = '0.0.5'
   s.summary          = 'iOS开发工具箱'
   s.description      = <<-DESC
     iOS开发工具箱，包含子类、分类、工具类
