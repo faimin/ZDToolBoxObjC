@@ -29,4 +29,15 @@
     }
 }
 
+#pragma mark - another no cycle ref method
+
++ (instancetype)zd_fireSecondsFromNow:(NSTimeInterval)delay block:(dispatch_block_t)block {
+    if (@available(iOS 10, *)) {
+        return [self scheduledTimerWithTimeInterval:delay repeats:NO block:(id)block];
+    }
+    else {
+        return [self scheduledTimerWithTimeInterval:delay target:block selector:@selector(invoke) userInfo:nil repeats:NO];
+    }
+}
+
 @end
