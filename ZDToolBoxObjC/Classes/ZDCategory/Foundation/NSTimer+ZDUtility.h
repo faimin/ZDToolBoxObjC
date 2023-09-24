@@ -12,13 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSTimer (ZDUtility)
 
-+ (NSTimer *)zd_scheduledTimerWithTimeInterval:(NSTimeInterval)seconds
-                                       repeats:(BOOL)repeats
-                                         block:(void (^)(NSTimer *timer))block;
++ (NSTimer *)zd_scheduledTimerWithTimeInterval:(NSTimeInterval)seconds repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block;
 
-+ (NSTimer *)zd_timerWithTimeInterval:(NSTimeInterval)seconds
-                              repeats:(BOOL)repeats
-                                block:(void (^)(NSTimer *timer))block;
++ (NSTimer *)zd_timerWithTimeInterval:(NSTimeInterval)seconds repeats:(BOOL)repeats block:(void (^)(NSTimer *timer))block;
 
 + (instancetype)zd_fireSecondsFromNow:(NSTimeInterval)delay block:(dispatch_block_t)block;
 

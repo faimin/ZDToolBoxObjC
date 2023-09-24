@@ -14,53 +14,23 @@
 
 #pragma mark - Size
 
-- (CGFloat)zd_widthWithFont:(UIFont *)font {
-    return [self zd_sizeWithFont:font constrainedToSize:CGSizeMake(CGFLOAT_MAX, CGFLOAT_MAX)].width;
-}
-
-- (CGFloat)zd_heightWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width {
-    return [self zd_sizeWithFont:font constrainedToSize:CGSizeMake(width, CGFLOAT_MAX)].height;
-}
-
-- (CGFloat)zd_widthWithFont:(UIFont *)font constrainedToHeight:(CGFloat)height {
-    return [self zd_sizeWithFont:font constrainedToSize:CGSizeMake(CGFLOAT_MAX, height)].width;
-}
-
-- (CGSize)zd_sizeWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width {
-    return [self zd_sizeWithFont:font constrainedToSize:CGSizeMake(width, CGFLOAT_MAX)];
-}
-
 - (CGSize)zd_sizeWithFont:(UIFont *)font constrainedToSize:(CGSize)needSize {
-    UIFont *textFont = font ? : [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    UIFont *textFont = font ? : [UIFont systemFontOfSize:UIFont.systemFontSize];
     
     CGSize textSize = CGSizeZero;
-    
-    if ([self respondsToSelector:@selector(boundingRectWithSize:options:attributes:context:)]) {
-        NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
-        paragraph.lineBreakMode = NSLineBreakByWordWrapping;
-        NSDictionary *attributes = @{
-            NSFontAttributeName : textFont,
-            NSParagraphStyleAttributeName : paragraph
-        };
-        textSize = [self boundingRectWithSize:needSize
-                                      options:(NSStringDrawingUsesLineFragmentOrigin |
-                                               NSStringDrawingTruncatesLastVisibleLine)
-                                   attributes:attributes
-                                      context:nil].size;
-    } else {
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-        textSize = [self sizeWithFont:textFont
-                    constrainedToSize:needSize
-                        lineBreakMode:NSLineBreakByWordWrapping];
-#pragma clang diagnostic pop
-    }
+    NSMutableParagraphStyle *paragraph = [[NSMutableParagraphStyle alloc] init];
+    paragraph.lineBreakMode = NSLineBreakByWordWrapping;
+    NSDictionary *attributes = @{
+        NSFontAttributeName : textFont,
+        NSParagraphStyleAttributeName : paragraph
+    };
+    textSize = [self boundingRectWithSize:needSize
+                                  options:(NSStringDrawingUsesLineFragmentOrigin |
+                                           NSStringDrawingTruncatesLastVisibleLine)
+                               attributes:attributes
+                                  context:nil].size;
     
     return CGSizeMake(ceil(textSize.width), ceil(textSize.height));
-}
-
-- (CGSize)zd_sizeWithFont:(UIFont *)font constrainedToWidth:(CGFloat)width lineSpace:(CGFloat)lineSpace {
-    return [self zd_sizeWithFont:font constrainedToSize:CGSizeMake(width, CGFLOAT_MAX) lineSpace:lineSpace];
 }
 
 - (CGSize)zd_sizeWithFont:(UIFont *)customFont constrainedToSize:(CGSize)size lineSpace:(CGFloat)lineSpace {
@@ -363,24 +333,8 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 
 }
 
-- (BOOL)zd_isEmptyOrNil {
-    if (self == nil || self == NULL) {
-        return YES;
-    }
-    
-    if ([self isKindOfClass:[NSNull class]]) {
-        return YES;
-    }
-    
-    if ([[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0) {
-        return YES;
-    }
-    
-    return NO;
-}
-
 - (BOOL)zd_isEmpty {
-    if ([[self stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]] length] == 0) {
+    if ([self stringByTrimmingCharactersInSet:NSCharacterSet.whitespaceCharacterSet].length == 0) {
         return YES;
     }
     return NO;
@@ -429,7 +383,7 @@ static inline CGSize CTFramesetterSuggestFrameSizeForAttributedStringWithConstra
 
 - (BOOL)zd_isValidWithRegex:(ZDRegex)regex {
     NSString *regexString = ZDRegexStr[regex];
-    if ([self zd_isEmptyOrNil] || !regexString) {
+    if ([self zd_isEmpty] || !regexString) {
         return NO;
     }
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regexString];
