@@ -1,4 +1,5 @@
 load("@build_bazel_rules_apple//apple:ios.bzl", "ios_application")
+package(default_visibility = ["//visibility:public"])
 # load(
 #     "@rules_xcodeproj//xcodeproj:deps.bzl",
 #     "top_level_target",
@@ -31,6 +32,7 @@ objc_library(
         "ZDToolBoxObjC/Classes/ZDProxy/**/*.m",
     ]),
     hdrs = glob(["ZDToolBoxObjC/Classes/ZDProxy/**/*.h"]),
+    includes = ["**/*.h"],
     enable_modules = 1,
     visibility = ["//visibility:public"],
 )
@@ -41,6 +43,10 @@ objc_library(
         "ZDToolBoxObjC/Classes/ZDCategory/**/*.m",
     ]),
     hdrs = glob(["ZDToolBoxObjC/Classes/ZDCategory/**/*.h"]),
+    sdk_frameworks = [
+        "UIKit",
+        "Foundation"
+    ],
     enable_modules = 1,
     visibility = ["//visibility:public"],
     deps = [":ZDMacro"],
@@ -52,6 +58,11 @@ objc_library(
         "ZDToolBoxObjC/Classes/ZDSubclass/**/*.m",
     ]),
     hdrs = glob(["ZDToolBoxObjC/Classes/ZDSubclass/**/*.h"]),
+    includes = ["**/*.h"],
+    sdk_frameworks = [
+        "UIKit",
+        "Foundation"
+    ],
     enable_modules = 1,
     visibility = ["//visibility:public"],
     deps = [":ZDProxy"],
@@ -63,6 +74,11 @@ objc_library(
         "ZDToolBoxObjC/Classes/ZDTools/**/*.m",
     ]),
     hdrs = glob(["ZDToolBoxObjC/Classes/ZDTools/**/*.h"]),
+    includes = ["**/*.h"],
+    sdk_frameworks = [
+        "UIKit",
+        "Foundation"
+    ],
     enable_modules = 1,
     visibility = ["//visibility:public"],
 )
@@ -100,7 +116,6 @@ ios_application(
     bundle_id = "org.cocoapods.demo.ZDToolBoxObjC-Example",
     families = [
         "iphone",
-        "ipad",
     ],
     infoplists = [":Example/ZDToolBoxObjC/ZDToolBoxObjC-Info.plist"],
     launch_storyboard = "Example/ZDToolBoxObjC/Base.lproj/LaunchScreen.storyboard",
