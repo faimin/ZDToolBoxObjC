@@ -16,7 +16,7 @@
 
 @implementation ZDOSLogger
 
-+ (instancetype)shareInstance {
++ (ZDOSLogger *)shareInstance {
     static ZDOSLogger *instance;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -27,32 +27,32 @@
 
 - (instancetype)initWithSubsystem:(NSString *)subsystem category:(NSString *)category {
     if (self = [super init]) {
-        _subsystem = subsystem;
+        _subsystem = subsystem ?: [NSBundle bundleForClass:self.class].bundleIdentifier;
         _category = category;
     }
     return self;
 }
 
-- (void)logWithType:(os_log_type_t)type message:(id)msg {
++ (void)logWithType:(os_log_type_t)type message:(id)msg {
     if (!msg) {
         return;
     }
     
     switch (type) {
         case OS_LOG_TYPE_INFO:
-            os_log_info(self.osLog, "%@", msg);
+            os_log_info(self.shareInstance.osLog, "%{public}@", msg);
             break;
         case OS_LOG_TYPE_DEBUG:
-            os_log_debug(self.osLog, "%@", msg);
+            os_log_debug(self.shareInstance.osLog, "%{public}@", msg);
             break;
         case OS_LOG_TYPE_ERROR:
-            os_log_error(self.osLog, "%@", msg);
+            os_log_error(self.shareInstance.osLog, "%{public}@", msg);
             break;
         case OS_LOG_TYPE_FAULT:
-            os_log_fault(self.osLog, "%@", msg);
+            os_log_fault(self.shareInstance.osLog, "%{public}@", msg);
             break;
         default:
-            os_log(self.osLog, "%@", msg);
+            os_log(self.shareInstance.osLog, "%{public}@", msg);
             break;
     }
 }
@@ -70,7 +70,7 @@
 }
 
 - (os_log_t)getLogger {
-    if (self.subsystem == nil || self.category == nil) {
+    if (self.category == nil) {
         return OS_LOG_DEFAULT;
     }
     

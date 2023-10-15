@@ -7,6 +7,7 @@
 //
 
 #import "ZDViewController.h"
+#import <ZDToolBoxObjC/ZDOSLogger.h>
 
 @interface ZDViewController ()
 
@@ -17,6 +18,8 @@
 - (void)viewDidLoad {
   [super viewDidLoad];
   // Do any additional setup after loading the view, typically from a nib.
+    
+    ZDOSLog(OS_LOG_TYPE_DEBUG, "message： %{public}@", @[@"1", @"2"]);
 }
 
 - (void)didReceiveMemoryWarning {
