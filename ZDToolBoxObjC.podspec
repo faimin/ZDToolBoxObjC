@@ -77,22 +77,28 @@ Pod::Spec.new do |s|
   s.subspec 'All' do |ss|
     ss.source_files = 'ZDToolBoxObjC/Classes/ZDAll/*'
     
+    ss.dependency 'ZDToolBoxObjC/ZDHeader'
+    ss.dependency 'ZDToolBoxObjC/ZDHook'
+  end
+
+  s.subspec 'ZDHeader' do |ss|
+    ss.source_files = 'ZDToolBoxObjC/Classes/ZDHeader/*.{h}'
+    
     ss.dependency 'ZDToolBoxObjC/ZDCommonTool'
     ss.dependency 'ZDToolBoxObjC/ZDMacros'
     ss.dependency 'ZDToolBoxObjC/ZDProxy'
     ss.dependency 'ZDToolBoxObjC/ZDCategory'
     ss.dependency 'ZDToolBoxObjC/ZDSubclass'
     ss.dependency 'ZDToolBoxObjC/ZDTools'
-    ss.dependency 'ZDToolBoxObjC/ZDHook'
   end
   
-  s.default_subspecs = 'ZDCommonTool', 'ZDMacros', 'ZDProxy', 'ZDCategory', 'ZDSubclass', 'ZDTools'
-  
-  # s.resource_bundles = {
-  #   'ZDToolBoxObjC' => ['ZDToolBoxObjC/Assets/*.png']
-  # }
-
-  # s.public_header_files = 'Pod/Classes/**/*.h'
-  # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+  s.default_subspecs = [
+    'ZDCommonTool',
+    'ZDMacros',
+    'ZDProxy',
+    'ZDCategory',
+    'ZDSubclass',
+    'ZDTools',
+    'ZDHeader'
+  ]
 end

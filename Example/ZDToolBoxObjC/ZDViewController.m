@@ -7,7 +7,7 @@
 //
 
 #import "ZDViewController.h"
-#import <ZDToolBoxObjC/ZDOSLogger.h>
+#import <ZDToolBoxObjC/ZDToolBoxObjC.h>
 
 @interface ZDViewController ()
 

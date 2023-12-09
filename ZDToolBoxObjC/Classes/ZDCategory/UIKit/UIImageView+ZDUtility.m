@@ -12,30 +12,30 @@
 #import <SDWebImage/SDImageCache.h>
 #endif
 
-@implementation UIImage (CornerRadius)
+@implementation UIImage (ZDCornerRadius)
 
 #pragma mark - Radius
 
-- (UIImage *)imageByRoundCornerRadius:(CGFloat)radius {
-    return [self imageByRoundCornerRadius:radius borderWidth:0 borderColor:nil];
+- (UIImage *)zd_imageByRoundCornerRadius:(CGFloat)radius {
+    return [self zd_imageByRoundCornerRadius:radius borderWidth:0 borderColor:nil];
 }
 
-- (UIImage *)imageByRoundCornerRadius:(CGFloat)radius
-                          borderWidth:(CGFloat)borderWidth
-                          borderColor:(UIColor *)borderColor {
-    return [self imageByRoundCornerRadius:radius
-                                  corners:UIRectCornerAllCorners
-                              borderWidth:borderWidth
-                              borderColor:borderColor
-                           borderLineJoin:kCGLineJoinMiter];
+- (UIImage *)zd_imageByRoundCornerRadius:(CGFloat)radius
+                             borderWidth:(CGFloat)borderWidth
+                             borderColor:(UIColor *)borderColor {
+    return [self zd_imageByRoundCornerRadius:radius
+                                     corners:UIRectCornerAllCorners
+                                 borderWidth:borderWidth
+                                 borderColor:borderColor
+                              borderLineJoin:kCGLineJoinMiter];
 }
 
 // by ibireme
-- (UIImage *)imageByRoundCornerRadius:(CGFloat)radius
-                              corners:(UIRectCorner)corners
-                          borderWidth:(CGFloat)borderWidth
-                          borderColor:(UIColor *)borderColor
-                       borderLineJoin:(CGLineJoin)borderLineJoin {
+- (UIImage *)zd_imageByRoundCornerRadius:(CGFloat)radius
+                                 corners:(UIRectCorner)corners
+                             borderWidth:(CGFloat)borderWidth
+                             borderColor:(UIColor *)borderColor
+                          borderLineJoin:(CGLineJoin)borderLineJoin {
     if (corners != UIRectCornerAllCorners) {
         UIRectCorner tmp = 0;
         if (corners & UIRectCornerTopLeft) tmp |= UIRectCornerBottomLeft;
@@ -79,7 +79,6 @@
     UIGraphicsEndImageContext();
     return image;
 }
-
 
 @end
 
@@ -133,15 +132,17 @@
         NSString *cacheurlStr = [urlStr stringByAppendingString:@"radiusCache"];
         UIImage *cacheImage = [[SDImageCache sharedImageCache] imageFromDiskCacheForKey:cacheurlStr];
         if (cacheImage) {
-            [self makeBackgroundColorToSuperView];
+            [self zd_makeBackgroundColorToSuperView];
             self.image = cacheImage;
         }
         else {
+            __weak typeof(self) ws = self;
             [self sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:placeHolderStr] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                __strong typeof(ws) self = ws;
                 if (!error) {
-                    UIImage *radiusImage = [image imageByRoundCornerRadius:radius];
+                    UIImage *radiusImage = [image zd_imageByRoundCornerRadius:radius];
                     
-                    [self makeBackgroundColorToSuperView];
+                    [self zd_makeBackgroundColorToSuperView];
                     self.image = radiusImage;
                     [[SDImageCache sharedImageCache] storeImage:radiusImage forKey:cacheurlStr completion:nil];
                     //清除原有非圆角图片缓存
@@ -181,7 +182,7 @@
 
 #pragma mark - Private Method
 
-- (void)makeBackgroundColorToSuperView {
+- (void)zd_makeBackgroundColorToSuperView {
     if (self.superview && ![self.backgroundColor isEqual:self.superview.backgroundColor]) {
         self.backgroundColor = self.superview.backgroundColor;
     }

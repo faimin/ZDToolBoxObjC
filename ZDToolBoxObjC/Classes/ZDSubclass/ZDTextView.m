@@ -7,7 +7,6 @@
 //
 
 #import "ZDTextView.h"
-#import <Foundation/Foundation.h>
 
 @interface ZDTextView ()
 @property (nonatomic, strong) UILabel *placeholderLabel;

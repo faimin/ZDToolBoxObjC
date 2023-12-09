@@ -1,13 +1,13 @@
 //
 //  ZDMacro.h
-//  ZDUtility
+//  ZDToolBoxObjC
 //
 //  Created by Zero on 15/8/18.
 //  Copyright (c) 2015年 Zero.D.Saber. All rights reserved.
 //
 
-#ifndef ZDUtility_ZDMacro_h
-#define ZDUtility_ZDMacro_h
+#ifndef ZDToolBoxObjC_ZDMacro_h
+#define ZDToolBoxObjC_ZDMacro_h
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
@@ -498,35 +498,3 @@ __VA_ARGS__                                                             \
 _Pragma("clang diagnostic pop")
 
 #endif /* ZDMacro_h */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
