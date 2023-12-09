@@ -1,6 +1,6 @@
 //
 //  ZDEdgeLabel.m
-//  ZDToolKitDemo
+//  ZDToolBoxObjC
 //
 //  Created by Zero.D.Saber on 16/9/6.
 //  Copyright © 2016年 Zero.D.Saber. All rights reserved.
