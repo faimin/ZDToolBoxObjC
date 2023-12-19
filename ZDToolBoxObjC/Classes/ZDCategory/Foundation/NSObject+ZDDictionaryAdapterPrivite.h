@@ -11,6 +11,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSObject (ZDDictionaryAdapterPrivite)
 
+#pragma mark - 语法糖
+
+- (id)objectAtIndexedSubscript:(NSUInteger)idx;
+- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx;
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)key;
+- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key;
+
 @end
 
 NS_ASSUME_NONNULL_END

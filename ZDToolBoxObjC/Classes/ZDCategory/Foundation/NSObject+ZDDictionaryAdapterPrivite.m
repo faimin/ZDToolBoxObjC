@@ -8,6 +8,8 @@
 #import "NSObject+ZDDictionaryAdapterPrivite.h"
 #import "ZDDictionaryProtocol.h"
 
+
+
 @implementation NSObject (ZDDictionaryAdapterPrivite)
 
 - (void)zd_printCurrentCallStack {
@@ -302,6 +304,53 @@
 
 - (void)zd_setBool:(BOOL)value forKey:(NSString *)key {
     [self zd_setObject:[NSNumber numberWithBool:value] forKey:key];
+}
+
+#pragma mark - 语法糖
+
+- (id)objectAtIndexedSubscript:(NSUInteger)idx {
+    if ([self isKindOfClass:NSArray.class]) {
+        NSArray *realObj = (NSArray *)self;
+        if (realObj.count > idx) {
+            return realObj[idx];
+        }
+    }
+    return nil;
+}
+
+- (void)setObject:(id)obj atIndexedSubscript:(NSUInteger)idx {
+    if (!obj) return;
+    
+    if ([self isKindOfClass:NSMutableArray.class]) {
+        NSMutableArray *realObj = (NSMutableArray *)self;
+        if (realObj.count >= idx) {
+            realObj[idx] = obj;
+        }
+    }
+}
+
+- (id)objectForKeyedSubscript:(id<NSCopying>)key {
+    if (!key) return nil;
+    
+    if ([self isKindOfClass:NSDictionary.class]) {
+        NSDictionary *realObj = (NSDictionary *)self;
+        return realObj[key];
+    }
+    return nil;
+}
+
+- (void)setObject:(id)obj forKeyedSubscript:(id<NSCopying>)key {
+    if (!key) return;
+    
+    if ([self isKindOfClass:NSMutableDictionary.class]) {
+        NSMutableDictionary *realObj = (NSMutableDictionary *)self;
+        realObj[key] = obj;
+        return;
+    }
+    
+    if ([(NSObject *)key isKindOfClass:NSString.class]) {
+        [self setValue:obj forKey:(NSString *)key];
+    }
 }
 
 @end
