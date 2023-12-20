@@ -336,6 +336,9 @@
         NSDictionary *realObj = (NSDictionary *)self;
         return realObj[key];
     }
+    if ([(NSObject *)key isKindOfClass:NSString.class]) {
+        return [self valueForKey:(NSString *)key];
+    }
     return nil;
 }
 
