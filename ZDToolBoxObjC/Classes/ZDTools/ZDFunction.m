@@ -207,6 +207,7 @@ UIImage *ZD_TintedImageWithColor(UIColor *tintColor, UIImage *image) {
     return coloredImage;
 }
 
+// https://swiftsenpai.com/development/reduce-uiimage-memory-footprint
 UIImage *ZD_ThumbnailImageFromURl(NSURL *url, int imageSize) {
      CGImageRef myThumbnailImage = NULL;
      CGImageSourceRef myImageSource;
