@@ -92,6 +92,7 @@ do {                                                 							\
 #endif
 
 #define ZD_Assert(expression, ...) \
+#if DEBUG \
 do { \
     if (!(expression)) { \
         NSLog(@"%@", [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __PRETTY_FUNCTION__, __FILE__, __LINE__, [NSString stringWithFormat:@"" __VA_ARGS__]]); \
@@ -100,10 +101,11 @@ do { \
             __builtin_debugtrap(); \
         } \
     } \
-} while(0)
+} while(0) \
+#endif
 
 //获取当前语言
-#define ZD_CurrentLanguage	([[NSLocale preferredLanguages] objectAtIndex:0])
+#define ZD_CurrentLanguage	(NSLocale.preferredLanguages.firstObject)
 
 //判断是真机还是模拟器
 #if TARGET_OS_IPHONE
@@ -134,8 +136,7 @@ do { \
 #if !__has_feature(objc_arc)
 	//释放一个对象
 	#define ZD_SAFE_RELEASE(P)	  \
-		if (P)					  \
-		{						  \
+		if (P) {			      \
 			[P release], P = nil; \
 		}
 #endif
@@ -280,7 +281,7 @@ do { \
 
 
 //MARK:- 读取本地图片
-#define ZD_BUNDLEIMAGE(file, type)	[UIImage imageWithContentsOfFile:[[NSBundle mainBundle]pathForResource:file ofType:type]]
+#define ZD_BUNDLEIMAGE(file, type)	[UIImage imageWithContentsOfFile:[[NSBundle mainBundle] pathForResource:file ofType:type]]
 //定义UIImage对象
 #define ZD_IMAGENAMED(_imageName)	[UIImage imageNamed:@#_imageName]
 
