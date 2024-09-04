@@ -33,7 +33,9 @@
 
 + (instancetype)zd_fireSecondsFromNow:(NSTimeInterval)delay block:(dispatch_block_t)block {
     if (@available(iOS 10, *)) {
-        return [self scheduledTimerWithTimeInterval:delay repeats:NO block:(id)block];
+        return [self scheduledTimerWithTimeInterval:delay repeats:NO block:^(NSTimer * _Nonnull timer) {
+            !block ?: block();
+        }];
     }
     else {
         return [self scheduledTimerWithTimeInterval:delay target:block selector:@selector(invoke) userInfo:nil repeats:NO];
