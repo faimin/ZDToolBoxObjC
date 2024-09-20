@@ -22,9 +22,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)removeAllObjects;
 
 /// 实现下标语法糖
-- (ObjectType _Nullable)objectAtIndexedSubscript:(NSUInteger)idx;
+- (ObjectType)objectAtIndexedSubscript:(NSUInteger)idx;
 - (void)setObject:(ObjectType _Nullable)obj atIndexedSubscript:(NSUInteger)idx NS_UNAVAILABLE;
-- (ObjectType _Nullable)objectForKeyedSubscript:(KeyType)key;
+- (ObjectType)objectForKeyedSubscript:(KeyType)key;
 - (void)setObject:(ObjectType _Nullable)obj forKeyedSubscript:(KeyType)key;
 
 @end

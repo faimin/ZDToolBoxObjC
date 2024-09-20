@@ -91,17 +91,19 @@ do {                                                 							\
   #define ZD_AlertLog(...)     ((void)0)
 #endif
 
-#define ZD_Assert(expression, ...) \
-#if DEBUG \
-do { \
-    if (!(expression)) { \
-        NSLog(@"%@", [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __PRETTY_FUNCTION__, __FILE__, __LINE__, [NSString stringWithFormat:@"" __VA_ARGS__]]); \
-        if (ZD_IsDebugging()) { \
-            printf("这是断点断言，直接跳过即可\n"); \
-            __builtin_debugtrap(); \
+#if DEBUG
+    #define ZD_Assert(expression, ...) \
+    do { \
+        if (!(expression)) { \
+            NSLog(@"%@", [NSString stringWithFormat: @"Assertion failure: %s in %s on line %s:%d. %@", #expression, __PRETTY_FUNCTION__, __FILE__, __LINE__, [NSString stringWithFormat:@"" __VA_ARGS__]]); \
+            if (ZD_IsDebugging()) { \
+                printf("这是断点断言，直接跳过即可\n"); \
+                __builtin_debugtrap(); \
+            } \
         } \
-    } \
-} while(0) \
+    } while(0)
+#else
+    #define ZD_Assert(expression, ...)
 #endif
 
 //获取当前语言
