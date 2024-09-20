@@ -1,28 +1,28 @@
 PODS:
-  - ZDToolBoxObjC/All (0.0.6):
+  - ZDToolBoxObjC/All (0.0.7):
     - ZDToolBoxObjC/ZDHeader
     - ZDToolBoxObjC/ZDHook
-  - ZDToolBoxObjC/ZDCategory (0.0.6):
-    - ZDToolBoxObjC/ZDCategory/Foundation (= 0.0.6)
-    - ZDToolBoxObjC/ZDCategory/UIKit (= 0.0.6)
-  - ZDToolBoxObjC/ZDCategory/Foundation (0.0.6)
-  - ZDToolBoxObjC/ZDCategory/UIKit (0.0.6):
+  - ZDToolBoxObjC/ZDCategory (0.0.7):
+    - ZDToolBoxObjC/ZDCategory/Foundation (= 0.0.7)
+    - ZDToolBoxObjC/ZDCategory/UIKit (= 0.0.7)
+  - ZDToolBoxObjC/ZDCategory/Foundation (0.0.7)
+  - ZDToolBoxObjC/ZDCategory/UIKit (0.0.7):
     - ZDToolBoxObjC/ZDProxy
-  - ZDToolBoxObjC/ZDCommonTool (0.0.6)
-  - ZDToolBoxObjC/ZDHeader (0.0.6):
+  - ZDToolBoxObjC/ZDCommonTool (0.0.7)
+  - ZDToolBoxObjC/ZDHeader (0.0.7):
     - ZDToolBoxObjC/ZDCategory
     - ZDToolBoxObjC/ZDCommonTool
     - ZDToolBoxObjC/ZDMacros
     - ZDToolBoxObjC/ZDProxy
     - ZDToolBoxObjC/ZDSubclass
     - ZDToolBoxObjC/ZDTools
-  - ZDToolBoxObjC/ZDHook (0.0.6)
-  - ZDToolBoxObjC/ZDMacros (0.0.6):
+  - ZDToolBoxObjC/ZDHook (0.0.7)
+  - ZDToolBoxObjC/ZDMacros (0.0.7):
     - ZDToolBoxObjC/ZDCommonTool
-  - ZDToolBoxObjC/ZDProxy (0.0.6)
-  - ZDToolBoxObjC/ZDSubclass (0.0.6):
+  - ZDToolBoxObjC/ZDProxy (0.0.7)
+  - ZDToolBoxObjC/ZDSubclass (0.0.7):
     - ZDToolBoxObjC/ZDProxy
-  - ZDToolBoxObjC/ZDTools (0.0.6)
+  - ZDToolBoxObjC/ZDTools (0.0.7)
 
 DEPENDENCIES:
   - ZDToolBoxObjC/All (from `../`)
@@ -32,8 +32,8 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  ZDToolBoxObjC: b25bf0702a38d5eca2280b78721799faa73e7337
+  ZDToolBoxObjC: 5218891fbe830ea0a65aeae7a6c6f064577435d9
 
 PODFILE CHECKSUM: 91afb3189ef4e3e95b5924002acef7f049bdb1ca
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
