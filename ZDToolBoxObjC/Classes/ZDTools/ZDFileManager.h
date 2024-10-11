@@ -4,6 +4,7 @@
 //
 //  Created by Zero on 15/7/11.
 //  Copyright (c) 2015年 Zero.D.Saber. All rights reserved.
+//
 //  http://nshipster.cn/nsfilemanager/
 
 #import <Foundation/Foundation.h>
@@ -27,33 +28,36 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (BOOL)isDirectoryAtPath:(NSString *)path;
 
-//MARK:creat、move、remove、sizeCount
+// 如果本地已有重名文件，文件名自动+1
++ (NSString *)uniquePathForPath:(NSString *)path;
+
+//MARK: creat、move、remove、sizeCount
 + (BOOL)mkdirAtPath:(NSString *)path;
 
-+ (BOOL)removeAtPath:(NSString *)path;
++ (BOOL)deleteAtPath:(NSString *)path;
 
-+ (BOOL)moveFromParh:(NSString *)fromPath
++ (BOOL)moveFromPath:(NSString *)fromPath
               toPath:(NSString *)toPath;
 
-+ (BOOL)copyFromParh:(NSString *)fromPath
++ (BOOL)copyFromPath:(NSString *)fromPath
               toPath:(NSString *)toPath;
 
-+ (long long)fileSizeAtPath:(NSString *)path;
++ (UInt64)fileSizeAtPath:(NSString *)path;
 
-+ (long long)folderSizeAtPath:(const char*)folderPath;
++ (UInt64)folderSizeAtPath:(const char*)folderPath;
 
-+ (unsigned long long)directorySize:(NSString *)directoryPath
-                          recursive:(BOOL)recursive;
++ (UInt64)directorySize:(NSString *)directoryPath
+              recursive:(BOOL)recursive;
 
-+ (long long)totalDiskSpace;
++ (UInt64)totalDiskSpace;
 
-+ (long long)freeDiskSpace;
++ (SInt64)freeDiskSpace;
 
-- (nullable NSString *)pathContentOfSymbolicLinkAtPath:(NSString *)path;
++ (nullable NSString *)pathContentOfSymbolicLinkAtPath:(NSString *)path;
 
-- (NSArray *)directoryContentsAtPath:(NSString *)path;
++ (NSArray<NSString *> *)directoryContentsAtPath:(NSString *)path;
 
-- (NSString *)currentDirectoryPath;
++ (NSString *)currentDirectoryPath;
 
 /// 清空NSUserDefaults中的全部数据
 + (void)clearUserDefaults;
@@ -65,15 +69,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface NSString (Path)
 
-- (NSString *)fileName;
+- (NSString *)zd_fileName;
 
-- (NSString *)fileFullName;
+- (NSString *)zd_fileFullName;
 
-- (NSString *)jointString:(NSString *)string;
+- (NSString *)zd_joinString:(NSString *)string;
 
-- (NSString *)jointPath:(NSString *)path;
+- (NSString *)zd_joinPath:(NSString *)path;
 
-- (NSString *)jointExtension:(NSString *)extension;
+- (NSString *)zd_joinExtension:(NSString *)extension;
 
 /** Creates a unique filename that can be used for one temporary file or folder.
  
@@ -81,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The generated temporary path.
  */
-+ (NSString *)pathForTemporaryFile;
++ (NSString *)zd_pathForTemporaryFile;
 
 /** Appends or Increments a sequence number in brackets
  
@@ -89,7 +93,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The incremented path
  */
-- (NSString *)pathByIncrementingSequenceNumber;
+- (NSString *)zd_pathByIncrementingSequenceNumber;
 
 /** Removes a sequence number in brackets
  
@@ -97,7 +101,7 @@ NS_ASSUME_NONNULL_BEGIN
  
  @return The modified path
  */
-- (NSString *)pathByDeletingSequenceNumber;
+- (NSString *)zd_pathByDeletingSequenceNumber;
 
 @end
 
