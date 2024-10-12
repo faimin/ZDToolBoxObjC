@@ -29,6 +29,8 @@
 #import "ZDAlertControllerHelper.h"
 #import "ZDInvocationWrapper.h"
 #import "ZDOSLogger.h"
+#import "ZDFileManager.h"
+#import "ZDFileWatcher.h"
 #import "ZDMutableDictionary.h"
 #import "ZDMutableArray.h"
 #import "ZDOrderedDictionary.h"
@@ -66,6 +68,8 @@
 #import <ZDToolBoxObjC/ZDAlertControllerHelper.h>
 #import <ZDToolBoxObjC/ZDInvocationWrapper.h>
 #import <ZDToolBoxObjC/ZDOSLogger.h>
+#import <ZDToolBoxObjC/ZDFileManager.h>
+#import <ZDToolBoxObjC/ZDFileWatcher.h>
 #import <ZDToolBoxObjC/ZDMutableDictionary.h>
 #import <ZDToolBoxObjC/ZDMutableArray.h>
 #import <ZDToolBoxObjC/ZDOrderedDictionary.h>
