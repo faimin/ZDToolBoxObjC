@@ -56,6 +56,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// find the contraint
 - (nullable NSLayoutConstraint *)zd_constraintForAttribute:(NSLayoutAttribute)attribute;
 
+/// callback on layoutSubviews
+- (void)zd_onLayout:(void(^)(UIView *v))callback;
+
 @end
 
 #pragma mark -

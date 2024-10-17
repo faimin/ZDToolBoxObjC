@@ -15,6 +15,63 @@ static const void *TapGestureBlockKey = &TapGestureBlockKey;
 static const void *LongPressGestureKey = &LongPressGestureKey;
 static const void *LongPressGestureBlockKey = &LongPressGestureBlockKey;
 
+#pragma mark - ZDLayoutGuideFrameObserver
+
+static NSString *LayoutGuideKeyPath = @"layoutFrame";
+
+@interface ZDLayoutGuideFrameObserver : NSObject
+@property (nonatomic, weak) UILayoutGuide *layoutGuide;
+@property (nonatomic, strong) NSMutableSet<dispatch_block_t> *onChanges;
+
+- (instancetype)initWithLayoutGuide:(UILayoutGuide *)guide;
+- (void)addFrameChange:(dispatch_block_t)block;
+
+@end
+
+@implementation ZDLayoutGuideFrameObserver
+
+- (void)dealloc {
+    if (!self.layoutGuide) {
+        return;
+    }
+    @try {
+        [self.layoutGuide removeObserver:self forKeyPath:LayoutGuideKeyPath context:nil];
+    } @catch (NSException *exception) {
+        NSLog(@"layouguide监听删除有异常 => %@", exception);
+    } @finally {
+        //
+    }
+}
+
+- (instancetype)initWithLayoutGuide:(UILayoutGuide *)guide {
+    if (self = [super init]) {
+        _onChanges = [[NSMutableSet alloc] init];
+        _layoutGuide = guide;
+        [guide addObserver:self forKeyPath:LayoutGuideKeyPath options:NSKeyValueObservingOptionNew context:nil];
+    }
+    return self;
+}
+
+- (void)addFrameChange:(dispatch_block_t)block {
+    if (!block) {
+        return;
+    }
+    [self.onChanges addObject:block];
+}
+
+#pragma mark - Private
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
+    if (![keyPath isEqualToString:LayoutGuideKeyPath]) {
+        return;
+    }
+    for (dispatch_block_t block in self.onChanges) {
+        block();
+    }
+}
+
+@end
+
 @implementation UIView (ZDUtility)
 
 #pragma mark Controller
@@ -234,6 +291,46 @@ static const void *LongPressGestureBlockKey = &LongPressGestureBlockKey;
     
     NSArray *fillteredArray = [constraintArray filteredArrayUsingPredicate:predicate];
     return fillteredArray.firstObject;
+}
+
+#pragma mark - Layout
+
+static void *LayoutGuideBindKey = &LayoutGuideBindKey;
+
+- (void)zd_onLayout:(void(^)(UIView *))callback {
+    if (!callback) {
+        return;
+    }
+    
+    __auto_type addGuideBlock = ^(UILayoutGuide *layoutGuide){
+        [self addLayoutGuide:layoutGuide];
+        [NSLayoutConstraint activateConstraints:@[
+            [layoutGuide.widthAnchor constraintEqualToAnchor:self.widthAnchor],
+            [layoutGuide.heightAnchor constraintEqualToAnchor:self.heightAnchor],
+        ]];
+    };
+    
+    UILayoutGuide *guide = objc_getAssociatedObject(self, _cmd);
+    if (!guide) {
+        guide = [[UILayoutGuide alloc] init];
+        objc_setAssociatedObject(self, _cmd, guide, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+        addGuideBlock(guide);
+        
+        ZDLayoutGuideFrameObserver *ob = [[ZDLayoutGuideFrameObserver alloc] initWithLayoutGuide:guide];
+        objc_setAssociatedObject(guide, LayoutGuideBindKey, ob, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    if (guide && guide.owningView != self) {
+        if (guide.owningView) {
+            [guide.owningView removeLayoutGuide:guide];
+        }
+        addGuideBlock(guide);
+    }
+    ZDLayoutGuideFrameObserver *observer = objc_getAssociatedObject(guide, LayoutGuideBindKey);
+    __weak typeof(self) weakTarget = self;
+    [observer addFrameChange:^{
+        __strong typeof(weakTarget) self = weakTarget;
+        callback(self);
+    }];
 }
 
 @end
