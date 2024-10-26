@@ -23,6 +23,7 @@
 #import "UIButton+ZDUtility.h"
 #import "UIImage+ZDUtility.h"
 #import "UIImageView+ZDUtility.h"
+#import "CAAnimation+ZDUtility.h"
 
 #import "ZDProxy.h"
 #import "ZDFunction.h"
@@ -62,6 +63,7 @@
 #import <ZDToolBoxObjC/UIButton+ZDUtility.h>
 #import <ZDToolBoxObjC/UIImageView+ZDUtility.h>
 #import <ZDToolBoxObjC/UIImage+ZDUtility.h>
+#import <ZDToolBoxObjC/CAAnimation+ZDUtility.h>
 
 #import <ZDToolBoxObjC/ZDProxy.h>
 #import <ZDToolBoxObjC/ZDFunction.h>
