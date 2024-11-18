@@ -9,10 +9,12 @@
 
 @implementation UIResponder (ZDUtility)
 
-- (void)zd_deliverEventWithName:(NSString *)eventName parameters:(NSDictionary *)paramsDict {
-    if (!eventName || eventName.length == 0) return;
+- (id)zd_deliverEventWithName:(NSString *)eventName parameters:(NSDictionary *)paramsDict {
+    if (!eventName || eventName.length == 0) {
+        return nil;
+    }
     
-    [[self nextResponder] zd_deliverEventWithName:eventName parameters:paramsDict];
+    return [[self nextResponder] zd_deliverEventWithName:eventName parameters:paramsDict];
 }
 
 @end
