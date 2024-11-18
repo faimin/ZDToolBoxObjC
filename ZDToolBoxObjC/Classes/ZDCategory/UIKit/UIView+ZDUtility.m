@@ -279,20 +279,6 @@ static NSString *LayoutGuideKeyPath = @"layoutFrame";
     }
 }
 
-#pragma mark - Constraints
-
-- (NSLayoutConstraint *)zd_constraintForAttribute:(NSLayoutAttribute)attribute {
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"firstAttribute = %d && (firstItem = %@ || secondItem = %@)", attribute, self, self];
-    NSArray *constraintArray = [self.superview constraints];
-    
-    if (attribute == NSLayoutAttributeWidth || attribute == NSLayoutAttributeHeight) {
-        constraintArray = [self constraints];
-    }
-    
-    NSArray *fillteredArray = [constraintArray filteredArrayUsingPredicate:predicate];
-    return fillteredArray.firstObject;
-}
-
 #pragma mark - Layout
 
 static void *LayoutGuideBindKey = &LayoutGuideBindKey;

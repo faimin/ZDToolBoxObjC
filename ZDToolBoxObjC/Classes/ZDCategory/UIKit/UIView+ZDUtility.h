@@ -53,9 +53,6 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)zd_addTapGestureWithBlock:(void(^)(UITapGestureRecognizer *tapGesture))tapBlock;
 - (void)zd_addLongPressGestureWithBlock:(void(^)(UILongPressGestureRecognizer *longPressGesture))longPressBlock;
 
-/// find the contraint
-- (nullable NSLayoutConstraint *)zd_constraintForAttribute:(NSLayoutAttribute)attribute;
-
 /// callback on layoutSubviews
 - (void)zd_onLayout:(void(^)(UIView *v))callback;
 
