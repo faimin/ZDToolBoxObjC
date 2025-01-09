@@ -188,7 +188,12 @@ FOUNDATION_EXPORT BOOL ZD_iPhone4s(void);
 FOUNDATION_EXPORT BOOL ZD_iPhone5s(void);
 FOUNDATION_EXPORT BOOL ZD_iPhone6(void);
 FOUNDATION_EXPORT BOOL ZD_iPhone6p(void);
+
+/// 是否是刘海机型
 FOUNDATION_EXPORT BOOL ZD_iPhoneX(void);
+
+/// 获取当前的window
+FOUNDATION_EXPORT UIWindow * _Nullable ZD_CurrentWindow(void);
 
 /// 获取 app 的 icon 图标名称
 FOUNDATION_EXPORT NSString *ZD_IconName(void);

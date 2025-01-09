@@ -1045,7 +1045,7 @@ BOOL ZD_isJailbroken(void) {
 // 当前设备是否设置了代理
 BOOL ZD_isSetProxy(void) {
     NSDictionary *proxySettings = (__bridge NSDictionary *)(CFNetworkCopySystemProxySettings());
-    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"http://www.baidu.com"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
+    NSArray *proxies = (__bridge NSArray *)(CFNetworkCopyProxiesForURL((__bridge CFURLRef _Nonnull)([NSURL URLWithString:@"https://www.baidu.com"]), (__bridge CFDictionaryRef _Nonnull)(proxySettings)));
     
     NSDictionary *settings = proxies.firstObject;
     return ![[settings objectForKey:(NSString *)kCFProxyTypeKey] isEqualToString:(NSString *)kCFProxyTypeNone];
@@ -1141,10 +1141,41 @@ BOOL ZD_iPhone6p(void) {
  横屏尺寸：2436px × 1125px(812pt × 375pt @3x)
  */
 BOOL ZD_iPhoneX(void) {
-    if (ZD_PrivateScreenSize().height == 812) {
-        return YES;
+    if (@available(iOS 11.0, *)) {
+        UIWindow *window = ZD_CurrentWindow() ?: UIWindow.new;
+        return window.safeAreaInsets.top > 0;
     }
     return NO;
+}
+
+UIWindow * _Nullable ZD_CurrentWindow(void) {
+    UIApplication *application = UIApplication.sharedApplication;
+    UIWindow *delegateWindow = application.delegate.window;
+    if (delegateWindow) {
+        return delegateWindow;
+    }
+    
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in application.connectedScenes) {
+            id<UIWindowSceneDelegate> delegate = (id)scene.delegate;
+            if (![delegate respondsToSelector:@selector(window)]) {
+                continue;
+            }
+            UIWindow *win = delegate.window;
+            if (win) {
+                return win;
+            }
+        }
+        UIWindow *mainWindow = application.windows.firstObject;
+        return mainWindow;
+    }
+    else {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored"-Wdeprecated-declarations"
+        UIWindow *keyWindow = application.keyWindow;
+#pragma clang diagnostic pop
+        return keyWindow;
+    }
 }
 
 // refer: http://www.cnblogs.com/tandaxia/p/5820217.html
